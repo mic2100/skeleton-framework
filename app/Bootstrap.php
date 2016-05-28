@@ -4,8 +4,7 @@ namespace Framework;
 
 use League\Container\Container;
 use League\Route\RouteCollection;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use League\Route\Strategy\StrategyInterface;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\SapiEmitter;
 use Zend\Diactoros\ServerRequestFactory;
@@ -45,12 +44,16 @@ class Bootstrap
 
     private function loadRoutes($container, array $routes)
     {
-        $router = new RouteCollection($container);
+        $routeCollection = new RouteCollection($container);
 
         foreach ($routes as $route) {
-            $router->map($route['method'], $route['path'], $route['handler']);
+            $route = $routeCollection->map($route['method'], $route['path'], $route['handler']);
+
+            if (isset($route['strategy']) && $route['strategy'] instanceof StrategyInterface) {
+                $route->setStrategy($route['strategy']);
+            }
         }
 
-        return $router;
+        return $routeCollection;
     }
 }

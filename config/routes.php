@@ -9,17 +9,20 @@
  *  [
  *      'method' => 'GET',
  *      'path' => 'account/login',
- *      'handler' => '<class or container name>::<method>',
+ *      'handler' => '<class or container name>::<method>||callable',
+ *      'strategy' => new League\Route\Strategy\ParamStrategy, //this is optional and can be omitted
  *  ],
  *  [
  *      'method' => 'POST',
  *      'path' => 'account/login',
- *      'handler' => '<class or container name>::<method>',
+ *      'handler' => '<class or container name>::<method>||callable',
+ *      'strategy' => new League\Route\Strategy\ParamStrategy, //this is optional and can be omitted
  *  ],
  *  [
  *      'method' => 'PUT',
  *      'path' => 'account/username/password-update',
- *      'handler' => '<class or container name>::<method>',
+ *      'handler' => '<class or container name>::<method>||callable',
+ *      'strategy' => new League\Route\Strategy\JsonStrategy, //this is optional and can be omitted
  *  ],
  * ]
  */

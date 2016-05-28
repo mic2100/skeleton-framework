@@ -29,7 +29,7 @@ str="\n\nerror_reporting = E_ALL\ndisplay_errors = On\n"
 sudo echo -e "$str" >> /etc/php/7.0/fpm/php.ini
 
 sudo rm -rf /etc/nginx/sites-available/* /etc/nginx/sites-enabled/*
-sudo ln -s /vagrant/vagrant-setup-files/nginx/converse.local.conf /etc/nginx/sites-enabled/converse.local.conf
+sudo ln -s /vagrant/vagrant-setup-files/nginx/framework.local.conf /etc/nginx/sites-enabled/framework.local.conf
 
 #restart apache to enable mod_rewrite & SSL
 sudo service nginx restart
@@ -41,8 +41,8 @@ sudo chmod 0644 /etc/php/7.0/fpm/php.ini
 mysql -uroot < /vagrant/vagrant-setup-files/database/import.sql
 
 #create the anxiety user and grant all permissions
-mysql -uroot -e "CREATE USER 'converse'@'localhost' IDENTIFIED BY 'converse';"
-mysql -uroot -e "GRANT ALL PRIVILEGES ON * . * TO 'converse'@'localhost';"
+mysql -uroot -e "CREATE USER 'framework'@'localhost' IDENTIFIED BY 'framework';"
+mysql -uroot -e "GRANT ALL PRIVILEGES ON * . * TO 'framework'@'localhost';"
 
 #remove the current www folder
 sudo rm -rf /var/www
@@ -51,5 +51,5 @@ sudo rm -rf /var/www
 sudo ln -s /vagrant /var/
 sudo mv /var/vagrant /var/www
 
-sudo mkdir -p /var/log/converse
-sudo chmod 0777 /var/log/converse
+sudo mkdir -p /var/log/framework
+sudo chmod 0777 /var/log/framework

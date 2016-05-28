@@ -3,6 +3,7 @@
 namespace Framework;
 
 use League\Container\Container;
+use League\Event\Emitter;
 use League\Route\RouteCollection;
 use League\Route\Strategy\StrategyInterface;
 use Zend\Diactoros\Response;
@@ -69,6 +70,8 @@ class Bootstrap
             );
         }
 
+        $container->share('events', $this->loadEvents($container));
+
         return $container;
     }
 
@@ -79,7 +82,7 @@ class Bootstrap
      * @param array $routes
      * @return RouteCollection
      */
-    private function loadRoutes($container, array $routes)
+    private function loadRoutes(Container $container, array $routes)
     {
         $routeCollection = new RouteCollection($container);
 
@@ -92,5 +95,21 @@ class Bootstrap
         }
 
         return $routeCollection;
+    }
+
+    private function loadEvents(Container $container)
+    {
+        $events = require_once __DIR__ . '/../config/events.php';
+        $emitter = new Emitter;
+
+        foreach ($events as $event) {
+            $emitter->addListener(
+                $event['name'],
+                $event['listener'],
+                isset($event['priority']) ? $event['priority'] : 0
+            );
+        }
+
+        return $emitter;
     }
 }

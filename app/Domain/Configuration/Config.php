@@ -18,7 +18,7 @@ class Config
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param bool|false $returnValue
      * @return ConfigItem|string|null - null if the ConfigItem entry does not exist
      */

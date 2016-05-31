@@ -21,10 +21,8 @@ class Bootstrap
      */
     public function load()
     {
-        $routes = require_once __DIR__ . '/../config/routes.php';
-
         $container = $this->loadContainer();
-        switch ($container->get('config')['environment']) {
+        switch ($container->get('config')->get('environment')) {
             case 'production':
                 error_reporting(0);
                 break;
@@ -38,6 +36,7 @@ class Bootstrap
                 error_reporting(E_ALL);
                 break;
         }
+        $routes = require_once __DIR__ . '/../config/routes.php';
         $route = $this->loadRoutes($container, $routes);
         $response = $route->dispatch($container->get('request'), $container->get('response'));
         $container->get('emitter')->emit($response);
@@ -51,7 +50,7 @@ class Bootstrap
     private function loadContainer()
     {
         $container = new Container;
-        $containers = require_once __DIR__ . '/../config/container.php';
+        $objects = require_once __DIR__ . '/../config/container.php';
 
         $container->share('response', Response::class);
         $container->share('request', function () {
@@ -62,11 +61,11 @@ class Bootstrap
 
         $container->share('emitter', SapiEmitter::class);
 
-        foreach ($containers as $container) {
+        foreach ($objects as $object) {
             $container->add(
-                $container['name'],
-                $container['concrete'],
-                isset($container['shared']) ? $container['shared'] : false
+                $object['name'],
+                $object['concrete'],
+                isset($object['shared']) ? $object['shared'] : false
             );
         }
 
@@ -87,16 +86,22 @@ class Bootstrap
         $routeCollection = new RouteCollection($container);
 
         foreach ($routes as $route) {
-            $route = $routeCollection->map($route['method'], $route['path'], $route['handler']);
+            $map = $routeCollection->map($route['method'], $route['path'], $route['handler']);
 
             if (isset($route['strategy']) && $route['strategy'] instanceof StrategyInterface) {
-                $route->setStrategy($route['strategy']);
+                $map->setStrategy($route['strategy']);
             }
         }
 
         return $routeCollection;
     }
 
+    /**
+     * Loads the events emitter
+     *
+     * @param Container $container
+     * @return Emitter
+     */
     private function loadEvents(Container $container)
     {
         $events = require_once __DIR__ . '/../config/events.php';

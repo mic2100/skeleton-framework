@@ -11,4 +11,6 @@ return [
      * development :: display all errors including notices
      */
     'environment' => 'development',
+    
+    'log-path' => '/var/log/framework/framework.log',
 ];

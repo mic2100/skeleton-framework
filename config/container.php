@@ -24,13 +24,13 @@ return [
         'shared' => true,
         'name' => 'config',
         'concrete' => function () {
-                $configItems = require_once __DIR__ . '/config.php';
-                $object = new Config();
-                foreach ($configItems as $name => $value) {
-                        $object->addItem(new ConfigItem($name, $value));
-                }
+            $configItems = require_once __DIR__ . '/config.php';
+            $object = new Config();
+            foreach ($configItems as $name => $value) {
+                $object->addItem(new ConfigItem($name, $value));
+            }
 
-                return $object;
+            return $object;
         },
     ],
     [

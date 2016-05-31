@@ -3,8 +3,8 @@
 return [
     'driver'    => 'pdo_mysql',
     'host'      => 'localhost',
-    'database'  => '<database-name>',
-    'username'  => '<username>',
-    'password'  => '<password>',
+    'database'  => 'framework',
+    'username'  => 'framework',
+    'password'  => 'framework',
     'charset'   => 'utf8',
 ];

@@ -1,5 +1,5 @@
 {
-    "name": "mic2100/skeletonFramework",
+    "name": "mic2100/skeleton-framework",
     "description": "A skeleton framework for PHP",
     "license": "MIT",
     "require": {

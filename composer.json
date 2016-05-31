@@ -1,4 +1,7 @@
 {
+    "name": "mic2100/skeletonFramework",
+    "description": "A skeleton framework for PHP",
+    "license": "MIT",
     "require": {
         "league/container": "2.0",
         "league/route": "^2.0",

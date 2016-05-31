@@ -15,5 +15,6 @@
         "psr-4": {
             "Framework\\": "app"
         }
-    }
+    },
+    "minimum-stability": "dev"
 }
